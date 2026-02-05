@@ -8,36 +8,13 @@
 <style>
 body{
   margin:0;
-  font-family: Tahoma, sans-serif;
+  font-family: 'Tahoma', sans-serif;
   background: radial-gradient(circle at top, #3b0015, #0a0004);
   color:#fff;
   text-align:center;
-  overflow:hidden;
-}
-
-/* قلوب الخلفية */
-.heart-bg{
-  position:fixed;
-  top:-10%;
-  font-size:20px;
-  color:rgba(255,45,85,0.7);
-  animation: fall linear infinite;
-}
-
-@keyframes fall{
-  0%{
-    transform:translateY(0) scale(1);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(120vh) scale(1.5);
-    opacity:0;
-  }
 }
 
 .container{
-  position:relative;
-  z-index:10;
   max-width:500px;
   margin:40px auto;
   padding:20px;
@@ -46,7 +23,14 @@ body{
   box-shadow: 0 0 40px rgba(255,0,80,0.3);
 }
 
-.date{opacity:.7;}
+.date{
+  opacity:.7;
+  margin-bottom:10px;
+}
+
+h1{
+  margin-top:10px;
+}
 
 .message{
   line-height:1.9;
@@ -58,6 +42,7 @@ input{
   padding:12px;
   border-radius:12px;
   border:none;
+  outline:none;
   text-align:center;
   font-size:16px;
 }
@@ -74,8 +59,18 @@ button{
   cursor:pointer;
 }
 
-.hidden{display:none;}
+button:hover{
+  opacity:.9;
+}
 
+.hidden{
+  display:none;
+}
+
+.heart{
+  color:#ff2d55;
+  font-size:24px;
+}
 </style>
 </head>
 
@@ -88,10 +83,12 @@ button{
   <div class="message">
     من أول مرة دخلتي حياتي، وكل حاجة بقت ليها طعم تاني.<br>
     الضحكة بقت من قلبي، والوقت بقى يعدي أسرع.<br>
-    المكان ده معمول مخصوص ليكي ❤️
+    المكان ده معمول مخصوص ليكي…<br><br>
+    <span class="heart">❤️</span>
   </div>
 
   <p>اكتبي الباسورد يا دلوعتي 👇</p>
+
   <input type="password" id="pass" placeholder="Password">
   <br>
   <button onclick="unlock()">✨ Unlock</button>
@@ -100,7 +97,8 @@ button{
     <h2>أنا مؤمن…</h2>
     <p>
       واخد القرار من يوم ما حبيتك،<br>
-      وهفضل مختارك كل يوم ❤️
+      وفضلت من بين الدنيا بعين تانية.<br>
+      بحبك ❤️
     </p>
   </div>
 </div>
@@ -108,29 +106,14 @@ button{
 <audio id="song" src="song.mp3"></audio>
 
 <script>
-/* توليد القلوب */
-function createHeart(){
-  const heart = document.createElement("div");
-  heart.className = "heart-bg";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random()*100 + "vw";
-  heart.style.animationDuration = (4 + Math.random()*6) + "s";
-  heart.style.fontSize = (14 + Math.random()*20) + "px";
-  document.body.appendChild(heart);
-
-  setTimeout(()=>{heart.remove();},10000);
-}
-setInterval(createHeart,400);
-
-/* Unlock */
 function unlock(){
   const input = document.getElementById("pass").value;
-  const correct = "2025/2/8";
+  const correct = "2025/2/8"; // الباسورد الحقيقي (مش باين في الصفحة)
 
   if(input === correct){
     document.getElementById("secret").classList.remove("hidden");
     document.getElementById("song").play();
-  }else{
+  } else {
     alert("غلط يا قمر 😅");
   }
 }
