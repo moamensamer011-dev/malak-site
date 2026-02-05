@@ -1,397 +1,140 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ملك ♥ مؤمن</title>
+<meta charset="UTF-8">
+<title>ملك ❤️ مؤمن</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root{
-      --bg:#0b0003;
-      --card:#120006;
-      --red:#e11d48;
-      --red2:#ff2d55;
-      --text:#ffe9ef;
-      --muted:#ffb3c3;
-      --shadow: 0 18px 60px rgba(225,29,72,.25);
-      --radius: 22px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
-      background:
-        radial-gradient(900px 500px at 80% -10%, rgba(255,45,85,.18), transparent 60%),
-        radial-gradient(800px 500px at 10% 10%, rgba(225,29,72,.15), transparent 55%),
-        radial-gradient(900px 700px at 50% 120%, rgba(255,45,85,.12), transparent 60%),
-        var(--bg);
-      color:var(--text);
-      min-height:100vh;
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:22px}
-    .topbar{
-      display:flex;justify-content:space-between;align-items:center;
-      gap:12px; padding:10px 2px; opacity:.95;
-    }
-    .badge{
-      font-size:12px; color:var(--muted);
-      border:1px solid rgba(255,179,195,.28);
-      padding:6px 10px; border-radius:999px;
-      background:rgba(18,0,6,.35);
-      backdrop-filter: blur(6px);
-    }
-    .card{
-      background: linear-gradient(180deg, rgba(18,0,6,.92), rgba(18,0,6,.70));
-      border: 1px solid rgba(255,179,195,.18);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      overflow:hidden;
-      position:relative;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(400px 180px at 50% 0%, rgba(255,45,85,.22), transparent 70%);
-      pointer-events:none;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:16px;
-    }
-    @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+<style>
+body{
+  margin:0;
+  font-family: Tahoma, sans-serif;
+  background: radial-gradient(circle at top, #3b0015, #0a0004);
+  color:#fff;
+  text-align:center;
+  overflow:hidden;
+}
 
-    h1,h2{margin:0 0 10px 0}
-    h1{font-size:28px}
-    h2{font-size:22px}
-    p{margin:0 0 10px 0; line-height:1.85; color:rgba(255,233,239,.92)}
-    .muted{color:rgba(255,179,195,.95)}
-    .divider{height:1px;background:rgba(255,179,195,.16);margin:14px 0}
-    .btn{
-      border:0; cursor:pointer;
-      background:linear-gradient(135deg, var(--red), var(--red2));
-      color:white; font-weight:700;
-      padding:12px 16px;
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(225,29,72,.35);
-      transition: transform .08s ease;
-      width:100%;
-      font-size:15px;
-    }
-    .btn:active{transform:scale(.99)}
-    .input{
-      width:100%;
-      padding:12px 14px;
-      border-radius: 14px;
-      border:1px solid rgba(255,179,195,.22);
-      background: rgba(11,0,3,.55);
-      color: var(--text);
-      font-size:16px;
-      outline:none;
-      text-align:center;
-    }
-    .hint{font-size:12px;color:rgba(255,179,195,.9)}
-    .error{color:#ffd1dc;background:rgba(225,29,72,.10);border:1px solid rgba(225,29,72,.28);padding:10px 12px;border-radius:14px}
-    .hidden{display:none !important}
+/* قلوب الخلفية */
+.heart-bg{
+  position:fixed;
+  top:-10%;
+  font-size:20px;
+  color:rgba(255,45,85,0.7);
+  animation: fall linear infinite;
+}
 
-    .section{display:none; animation: fade .24s ease;}
-    .section.active{display:block}
-    @keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fall{
+  0%{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(120vh) scale(1.5);
+    opacity:0;
+  }
+}
 
-    .photo{
-      width:100%;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      border-radius: 18px;
-      border:1px solid rgba(255,179,195,.18);
-      box-shadow: 0 16px 50px rgba(0,0,0,.35);
-      background:#090003;
-    }
+.container{
+  position:relative;
+  z-index:10;
+  max-width:500px;
+  margin:40px auto;
+  padding:20px;
+  border-radius:20px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 40px rgba(255,0,80,0.3);
+}
 
-    /* Timer */
-    .timer{
-      display:grid;
-      grid-template-columns: repeat(4,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
-    @media (max-width:520px){ .timer{grid-template-columns:repeat(2,1fr)} }
-    .tbox{
-      padding:14px 12px;
-      border-radius: 18px;
-      border:1px solid rgba(255,179,195,.18);
-      background: rgba(11,0,3,.42);
-      text-align:center;
-    }
-    .tbox .num{font-size:26px;font-weight:800}
-    .tbox .lab{font-size:12px;color:rgba(255,179,195,.92);margin-top:2px}
+.date{opacity:.7;}
 
-    .footer{
-      text-align:center;
-      color:rgba(255,179,195,.9);
-      font-size:12px;
-      padding:10px 0 0;
-    }
+.message{
+  line-height:1.9;
+  margin:20px 0;
+}
 
-    /* Tiny floating hearts on gate */
-    .hearts{
-      position:absolute; inset:0; pointer-events:none; opacity:.9;
-      mask-image: radial-gradient(circle at 50% 30%, black 55%, transparent 90%);
-    }
-    .heart{
-      position:absolute;
-      width:10px;height:10px;
-      background: rgba(255,45,85,.45);
-      transform: rotate(45deg);
-      border-radius: 2px;
-      animation: float 6.5s linear infinite;
-      filter: blur(.1px);
-    }
-    .heart:before,.heart:after{
-      content:"";
-      position:absolute;
-      width:10px;height:10px;
-      background: rgba(255,45,85,.45);
-      border-radius:50%;
-    }
-    .heart:before{left:-5px; top:0}
-    .heart:after{left:0; top:-5px}
-    @keyframes float{
-      0%{transform:translateY(40px) rotate(45deg); opacity:0}
-      15%{opacity:1}
-      100%{transform:translateY(-520px) rotate(45deg); opacity:0}
-    }
-  </style>
+input{
+  width:80%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  text-align:center;
+  font-size:16px;
+}
+
+button{
+  margin-top:15px;
+  width:85%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:#ff2d55;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.hidden{display:none;}
+
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="badge">ملك ♥ مؤمن</div>
-      <div class="badge">2025/2/8</div>
-    </div>
 
-    <!-- 🎶 MP3 (Hidden) -->
-    <audio id="loveSong" src="song.mp3" preload="auto"></audio>
+<div class="container">
+  <div class="date">2025/2/8</div>
+  <h1>ملك ❤️ مؤمن</h1>
 
-    <!-- SECTION 1: Password Gate -->
-    <section id="s-gate" class="section active">
-      <div class="card" style="position:relative;">
-        <div class="hearts" id="hearts"></div>
-
-        <div class="grid">
-          <div>
-            <h1>ملك…</h1>
-            <p>من أول مرة دخلتي حياتي، وكل حاجة بقت ليها طعم تاني.</p>
-            <p>الضحكة بقت من قلبي، والوقت بقى يعدّي أسرع،</p>
-            <p>وأنا بقيت مطمّن إن في قلبي حد يستاهل الحب دا كله.</p>
-            <p>المكان ده معمول مخصوص ليكي…</p>
-            <p>عشان أقولك إنك اختياري، وكل يوم هتفضلي اختياري ❤️</p>
-            <div class="divider"></div>
-            <p style="margin:0"><strong>اكتبي الباسورد يا دلوعتي ♥️👇</strong></p>
-            <p class="hint">تلميح: تاريخ…</p>
-          </div>
-
-          <div>
-            <div class="card" style="padding:14px;background:rgba(11,0,3,.35);box-shadow:none">
-              <label class="muted" for="pw" style="display:block;margin-bottom:8px">Password</label>
-              <input id="pw" class="input" placeholder="0/0/0" autocomplete="off" />
-              <div style="height:10px"></div>
-              <button class="btn" id="unlockBtn">Unlock 💖</button>
-              <div style="height:12px"></div>
-              <div id="errBox" class="error hidden">اخس عليكي يا أم أسر 🥲</div>
-              <div style="height:10px"></div>
-              <div class="hint">لو الصوت ما اشتغلش، افتحي الموقع واضغطي Unlock مرة تانية (موبايلات كتير بتحب كده).</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">Made with love — مؤمن</div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: Momen -->
-    <section id="s-momen" class="section">
-      <div class="card">
-        <div class="grid">
-          <div>
-            <h2>أنا مؤمن…</h2>
-            <p>واحد اتغيّر من يوم ما حبك، وبقى شايف الدنيا بعين تانية.</p>
-            <p class="muted">تعالي نكمّل…</p>
-            <div class="divider"></div>
-            <button class="btn" data-next="s-malak">التالي → ملك 👑</button>
-          </div>
-          <div>
-            <img class="photo" src="momen.jpg" alt="Momen" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: Malak -->
-    <section id="s-malak" class="section">
-      <div class="card">
-        <div class="grid">
-          <div>
-            <h2>دي ملك…</h2>
-            <p>البنت اللي خطفت قلبي من غير ما تحاول، واللي وجودها في حياتي لوحده كفاية يطمني.</p>
-            <p class="muted">جاهزة تسمعي اللي في قلبي؟ ❤️</p>
-            <div class="divider"></div>
-            <button class="btn" data-next="s-love">التالي → الرسالة الكبيرة ❤️</button>
-          </div>
-          <div>
-            <img class="photo" src="malak.jpg" alt="Malak" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: Love Letter -->
-    <section id="s-love" class="section">
-      <div class="card">
-        <h2>رسالة من قلبي…</h2>
-        <p><strong>ملك…</strong></p>
-        <p>ممكن الكلام ميكفّيش، وممكن الحروف تخونّي، بس هحاول أقولك اللي في قلبي زي ما هو… من غير تجميل.</p>
-        <p>من يوم <strong>2025/2/8</strong> وأنا مش نفس الشخص اللي قبله. بقيت أضحك أكتر، أهدى أكتر، وأطمن أكتر… لأني ببساطة بقيت حاسس إن في حد معايا، حد شايفني، فاهمني، ومستحملني.</p>
-        <p>وجودك في حياتي مش مجرد حب… ده أمان. ده إحساس إني مش لوحدي مهما الدنيا لفت بيا. إنتي الحاجة الحلوة اللي بتيجي في وسط الزحمة، والهدوء اللي بييجي بعد تعب طويل.</p>
-        <p>بحبك مش عشان انتي كاملة… بحبك عشان حقيقية. بضحكتك، بزعلِك، بتفاصيلك الصغيرة اللي يمكن متاخديش بالك منها بس أنا بحفظها واحدة واحدة.</p>
-        <p>بحبك عشان لما بكلمك بحس إني في بيتي، ولما أسمع صوتك بحس إن اليوم لسه فيه خير… ومن غير ما تحاولي عرفتي تملكي قلبي.</p>
-        <p><strong>ومش هبالغ لو قلت إنك مراتي، وصاحبتي، وبنتي، وحبيبتي، وأمي…</strong> إنتي كل الأدوار الحلوة اللي محتاجها في حياتي.</p>
-        <p>المكان ده معمول مخصوص ليكي… عشان أقولك إنك مش اختيار عادي، إنتي اختيار عمري. وإن مهما الأيام عدّت… أنا كل مرة هاختارك من أول وجديد.</p>
-        <p>لو ينفع أطلب حاجة من الدنيا… فهي إني أفضل جنبك، نضحك، نغلط، نتعلّم، ونكمل سوا.</p>
-        <p><strong>ملك…</strong> إنتي مش بس حبيبتي… إنتي راحتي، وأماني، وأحلى حاجة حصلتلي ❤️</p>
-        <p class="muted">— مؤمن</p>
-
-        <div class="divider"></div>
-        <button class="btn" data-next="s-timer">التالي → عدّاد الحب ⏱️</button>
-      </div>
-    </section>
-
-    <!-- SECTION 5: Timer -->
-    <section id="s-timer" class="section">
-      <div class="card">
-        <h2>من اليوم اللي بدأ فيه كل شيء…</h2>
-        <p class="muted">من 2025/2/8</p>
-
-        <div class="timer">
-          <div class="tbox"><div class="num" id="d">0</div><div class="lab">يوم</div></div>
-          <div class="tbox"><div class="num" id="h">0</div><div class="lab">ساعة</div></div>
-          <div class="tbox"><div class="num" id="mi">0</div><div class="lab">دقيقة</div></div>
-          <div class="tbox"><div class="num" id="se">0</div><div class="lab">ثانية</div></div>
-        </div>
-
-        <div class="divider"></div>
-        <button class="btn" data-next="s-end">التالي → الخاتمة ❤️</button>
-      </div>
-    </section>
-
-    <!-- SECTION 6: End -->
-    <section id="s-end" class="section">
-      <div class="card">
-        <h2>الخاتمة…</h2>
-        <p>يمكن الصور متجمعناش…</p>
-        <p>بس القلوب سبقت كل حاجة…</p>
-        <p>ولسه العمر كله قدامنا ❤️</p>
-        <div class="divider"></div>
-        <p class="muted">— مؤمن</p>
-      </div>
-    </section>
-
+  <div class="message">
+    من أول مرة دخلتي حياتي، وكل حاجة بقت ليها طعم تاني.<br>
+    الضحكة بقت من قلبي، والوقت بقى يعدي أسرع.<br>
+    المكان ده معمول مخصوص ليكي ❤️
   </div>
 
-  <script>
-    // Hearts on gate
-    const hearts = document.getElementById('hearts');
-    for (let i=0;i<18;i++){
-      const h=document.createElement('div');
-      h.className='heart';
-      h.style.left = Math.random()*100 + '%';
-      h.style.bottom = (-20 - Math.random()*120) + 'px';
-      h.style.animationDelay = (Math.random()*5) + 's';
-      h.style.animationDuration = (5.5 + Math.random()*4) + 's';
-      h.style.opacity = (0.3 + Math.random()*0.6);
-      h.style.transform = `scale(${0.7 + Math.random()*1.2}) rotate(45deg)`;
-      hearts.appendChild(h);
-    }
+  <p>اكتبي الباسورد يا دلوعتي 👇</p>
+  <input type="password" id="pass" placeholder="Password">
+  <br>
+  <button onclick="unlock()">✨ Unlock</button>
 
-    // Section navigation
-    const sections = Array.from(document.querySelectorAll('.section'));
-    function show(id){
-      sections.forEach(s => s.classList.toggle('active', s.id===id));
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
-    document.querySelectorAll('[data-next]').forEach(btn=>{
-      btn.addEventListener('click', ()=> show(btn.dataset.next));
-    });
+  <div id="secret" class="hidden">
+    <h2>أنا مؤمن…</h2>
+    <p>
+      واخد القرار من يوم ما حبيتك،<br>
+      وهفضل مختارك كل يوم ❤️
+    </p>
+  </div>
+</div>
 
-    // Password + Start MP3
-    const correct = '2025/2/8';
-    const pw = document.getElementById('pw');
-    const errBox = document.getElementById('errBox');
-    const loveSong = document.getElementById('loveSong');
+<audio id="song" src="song.mp3"></audio>
 
-    function normalize(x){
-      return (x||'').trim()
-        .replace(/\s+/g,'')
-        .replace(/-/g,'/')
-        .replace(/\\/g,'/');
-    }
+<script>
+/* توليد القلوب */
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className = "heart-bg";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4 + Math.random()*6) + "s";
+  heart.style.fontSize = (14 + Math.random()*20) + "px";
+  document.body.appendChild(heart);
 
-    async function playSong(){
-      try{
-        loveSong.loop = true;
-        loveSong.volume = 1;
-        await loveSong.play();
-      }catch(e){
-        // لو المتصفح منعها، نخليها تبدأ أول ما المستخدم يدوس في أي مكان
-        const once = async ()=>{
-          try{ await loveSong.play(); }catch(_){}
-          document.removeEventListener('click', once);
-          document.removeEventListener('touchstart', once);
-        };
-        document.addEventListener('click', once, {once:true});
-        document.addEventListener('touchstart', once, {once:true});
-      }
-    }
+  setTimeout(()=>{heart.remove();},10000);
+}
+setInterval(createHeart,400);
 
-    document.getElementById('unlockBtn').addEventListener('click', async ()=>{
-      const v = normalize(pw.value);
-      if(v === correct){
-        errBox.classList.add('hidden');
-        await playSong();     // ✅ هنا بتبدأ الأغنية بعد Unlock
-        show('s-momen');
-      }else{
-        errBox.classList.remove('hidden');
-      }
-    });
+/* Unlock */
+function unlock(){
+  const input = document.getElementById("pass").value;
+  const correct = "2025/2/8";
 
-    pw.addEventListener('keydown', (e)=>{
-      if(e.key==='Enter') document.getElementById('unlockBtn').click();
-    });
+  if(input === correct){
+    document.getElementById("secret").classList.remove("hidden");
+    document.getElementById("song").play();
+  }else{
+    alert("غلط يا قمر 😅");
+  }
+}
+</script>
 
-    // Timer since 2025/2/8
-    const start = new Date(2025, 1, 8, 0, 0, 0); // Feb=1
-    const elD = document.getElementById('d');
-    const elH = document.getElementById('h');
-    const elM = document.getElementById('mi');
-    const elS = document.getElementById('se');
-
-    function tick(){
-      const now = new Date();
-      let diff = Math.max(0, now - start);
-      const sec = Math.floor(diff/1000);
-      const days = Math.floor(sec / 86400);
-      const hours = Math.floor((sec % 86400) / 3600);
-      const mins = Math.floor((sec % 3600) / 60);
-      const secs = sec % 60;
-      elD.textContent = days;
-      elH.textContent = hours;
-      elM.textContent = mins;
-      elS.textContent = secs;
-    }
-    tick();
-    setInterval(tick, 1000);
-  </script>
 </body>
 </html>
